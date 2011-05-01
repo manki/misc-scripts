@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# Copyright Muthu Kannan 2011. All Rights Reserved.
+# Copyright 2011 Muthu Kannan. All Rights Reserved.
 #
 # Script that searches for a string in a Blogger export XML file.
 
