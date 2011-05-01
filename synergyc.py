@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Copyright 2010 Muthu Kannan. All Rights Reserved.
 #
 # Sets up an SSH tunnel and starts Synergy Client.
 
