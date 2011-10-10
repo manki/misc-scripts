@@ -8,6 +8,25 @@ import (
 	"os"
 )
 
+const (
+	minBrightness = 0x0f
+	maxBrightness = 0xff
+)
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
 func brightness() int {
 	cmd := exec.Command("setpci", "-s", "00:02.0", "f4.b")
 	out, err := cmd.Output()
@@ -22,6 +41,8 @@ func brightness() int {
 }
 
 func setBrightness(b int) {
+	b = max(b, minBrightness)
+	b = min(b, maxBrightness)
 	cmd := exec.Command("setpci", "-s", "00:02.0", fmt.Sprintf("f4.b=%x", b))
 	if err := cmd.Run(); err != nil {
 		fmt.Fprintf(os.Stderr, "Running setpci failed: %v\n", err)
