@@ -46,14 +46,12 @@ LTP.searchScriptUrl_ = function(postUrl, authorId, callbackName) {
 };
 
 LTP.processResults_ = function(anchor, data) {
-  var img = '<img src="https://ssl.gstatic.com/images/icons/gplus-16.png"' +
-      'width="16" height="16" class="plug-logo-16">';
   for (var i = 0, len = data.items.length; i < len; ++i) {
     var it = data.items[i];
     if (it.actor.id == LTP.authorId) {
       var numComments = it.object.replies.totalItems;
       anchor.href = it.object.url;
-      anchor.innerHTML = img + ' Discuss on Google+' +
+      anchor.innerHTML = 'Discuss on Google+' +
           (numComments == 0 ? '' : ' (' + numComments + ' comments)');
       break;
     }
