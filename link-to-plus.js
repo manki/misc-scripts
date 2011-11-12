@@ -51,8 +51,15 @@ LTP.processResults_ = function(anchor, data) {
     if (it.actor.id == LTP.authorId) {
       var numComments = it.object.replies.totalItems;
       anchor.href = it.object.url;
-      anchor.innerHTML = 'Discuss on Google+' +
-          (numComments == 0 ? '' : ' (' + numComments + ' comments)');
+      var text = '';
+      if (numComments == 0) {
+        text = 'Discuss on Google+';
+      } else if (numComments == 1) {
+        text = '1 comment on Google+';
+      } else {
+        text = numComments + ' comments on Google+';
+      }
+      anchor.innerHTML = text;
       break;
     }
   }
