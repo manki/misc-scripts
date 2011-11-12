@@ -22,7 +22,7 @@ LTP.link = function() {
   for (var i = 0, len = elts.length; i < len; ++i) {
     var elt = elts[i];
     LTP.callbacks.push(LTP.createCallback_(elt));
-    LTP.addScript_(LTP.searchScriptUrl_(elt['data-post-url'],
+    LTP.addScript_(LTP.searchScriptUrl_(elt.getAttribute('data-post-url'),
         LTP.authorId,
         'LTP.callbacks[' + (LTP.callbacks.length - 1) + ']'));
   }
