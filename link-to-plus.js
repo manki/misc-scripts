@@ -42,7 +42,8 @@ LTP.searchScriptUrl_ = function(postUrl, authorId, callbackName) {
       '?key=' + encodeURI(LTP.apiKey) +
       '&query=' + encodeURI(postUrl + ' ' + authorId) +
       '&fields=' + encodeURI(LTP.fields) +
-      '&callback=' + encodeURI(callbackName);
+      '&callback=' + encodeURI(callbackName) +
+      '&pp=0';
 };
 
 LTP.processResults_ = function(anchor, data) {
