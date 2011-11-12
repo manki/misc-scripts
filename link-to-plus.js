@@ -47,7 +47,7 @@ LTP.searchScriptUrl_ = function(postUrl, authorId, callbackName) {
 
 LTP.processResults_ = function(anchor, data) {
   var img = '<img src="https://ssl.gstatic.com/images/icons/gplus-16.png"' +
-      'width="16" height="16" style="border-width: 0px;">';
+      'width="16" height="16" class="plug-logo-16">';
   for (var i = 0, len = data.items.length; i < len; ++i) {
     var it = data.items[i];
     if (it.actor.id == LTP.authorId) {
