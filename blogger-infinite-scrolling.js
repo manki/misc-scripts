@@ -29,7 +29,6 @@ function loadMore() {
 
     var newPosts = newDom.find(postContainerSelector + '>*');
     $(postContainerSelector).append(newPosts);
-    gapi.plusone.go();
     loadMoreDiv.find('img').hide();
     loadMoreDiv.find('a').show();
 
