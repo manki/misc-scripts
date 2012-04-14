@@ -29,6 +29,9 @@ function loadMore() {
 
     var newPosts = newDom.find(postContainerSelector + '>*');
     $(postContainerSelector).append(newPosts);
+    if (gapi && gapi.plusone && gapi.plusone.go) {
+      gapi.plusone.go();
+    }
     loadMoreDiv.find('img').hide();
     loadMoreDiv.find('a').show();
 
