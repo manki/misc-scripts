@@ -13,6 +13,7 @@ function loadMore() {
 
   if (!olderPostsLink) {
     loadMoreDiv.hide();
+    return;
   }
 
   loadMoreDiv.find('a').hide();
