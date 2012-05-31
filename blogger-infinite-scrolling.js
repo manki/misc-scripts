@@ -30,8 +30,8 @@ function loadMore() {
 
     var newPosts = newDom.find(postContainerSelector + '>*');
     $(postContainerSelector).append(newPosts);
-    if (gapi && gapi.plusone && gapi.plusone.go) {
-      gapi.plusone.go();
+    if (window.gapi && window.gapi.plusone && window.gapi.plusone.go) {
+      window.gapi.plusone.go();
     }
     loadMoreDiv.find('img').hide();
     loadMoreDiv.find('a').show();
