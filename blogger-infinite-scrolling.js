@@ -19,6 +19,12 @@ function loadMore() {
   loadMoreDiv.find('a').hide();
   loadMoreDiv.find('img').show();
   $.get(olderPostsLink, null, function(html) {
+    // Loaded more posts successfully.  Register this pageview with
+    // Google Analytics.
+    if (window._gaq) {
+      window._gaq.push(['_trackPageview', olderPostsLink]);
+    }
+
     var newDom = $(html);
     var newLink = newDom.find('a.blog-pager-older-link');
     if (newLink) {
