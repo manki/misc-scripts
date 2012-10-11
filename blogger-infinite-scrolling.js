@@ -5,6 +5,16 @@ var loadMoreDiv = null;
 var postContainerSelector = 'div.blog-posts';
 var loading = false;
 
+function loadDisqusScript(domain) {
+  var bloggerjs = document.createElement('script');
+  bloggerjs.type = 'text/javascript';
+  bloggerjs.async = true;
+  bloggerjs.src = 'http://' + domain + '.disqus.com/blogger_index.js';
+  (document.getElementsByTagName('head')[0] ||
+   document.getElementsByTagName('body')[0]).
+      appendChild(bloggerjs);
+}
+
 function loadMore() {
   if (loading) {
     return;
@@ -23,6 +33,10 @@ function loadMore() {
     // Google Analytics.
     if (window._gaq) {
       window._gaq.push(['_trackPageview', olderPostsLink]);
+    }
+
+    if (window.disqus_shortname) {
+      loadDisqusScript(window.disqus_shortname);
     }
 
     var newDom = $(html);
@@ -49,7 +63,7 @@ function loadMore() {
 function handleScroll() {
   var height = document.body.scrollHeight;
   var pos = $(window).scrollTop() + $(window).height();
-  if (height - pos < 100) {
+  if (height - pos < 150) {
     loadMore();
   }
 }
@@ -77,10 +91,6 @@ function init() {
   $('#blog-pager').hide();
 }
 
-if (document.readyState == 'complete' || document.readyState == 'loaded') {
-  init();
-} else {
-  $(document).ready(init);
-}
+$(document).ready(init);
 
 })();
