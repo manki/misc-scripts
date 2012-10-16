@@ -35,10 +35,6 @@ function loadMore() {
       window._gaq.push(['_trackPageview', olderPostsLink]);
     }
 
-    if (window.disqus_shortname) {
-      loadDisqusScript(window.disqus_shortname);
-    }
-
     var newDom = $(html);
     var newLink = newDom.find('a.blog-pager-older-link');
     if (newLink) {
@@ -50,9 +46,20 @@ function loadMore() {
 
     var newPosts = newDom.find(postContainerSelector + '>*');
     $(postContainerSelector).append(newPosts);
+
+    // Render +1 buttons.
     if (window.gapi && window.gapi.plusone && window.gapi.plusone.go) {
       window.gapi.plusone.go();
     }
+    // Render Disqus comments.
+    if (window.disqus_shortname) {
+      loadDisqusScript(window.disqus_shortname);
+    }
+    // Render Facebook buttons.
+    if (window.FB && window.FB.XFBML && window.FB.XFBML.parse) {
+      window.FB.XFBML.parse();
+    }
+
     loadMoreDiv.find('img').hide();
     loadMoreDiv.find('a').show();
 
