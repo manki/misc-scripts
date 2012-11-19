@@ -5,7 +5,8 @@ var loadMoreDiv = null;
 var postContainerSelector = 'div.blog-posts';
 var loading = false;
 
-var $win = $(window);
+var win = $(window);
+var doc = $(document);
 // Took from jQuery to avoid permission denied error in IE.
 var rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
 
@@ -68,14 +69,14 @@ function loadMore() {
 
 function getDocumentHeight() {
   return Math.max(
-      $win.height(),
-      $doc.height(),
+      win.height(),
+      doc.height(),
       document.documentElement.clientHeight);
 }
 
 function handleScroll() {
   var height = getDocumentHeight();
-  var pos = $win.scrollTop() + $win.height();
+  var pos = win.scrollTop() + win.height();
   if (height - pos < 150) {
     loadMore();
   }
@@ -95,7 +96,7 @@ function init() {
   link.click(loadMore);
   var img = $('<img src="' + loadingGif + '" style="display: none;">');
 
-  $win.scroll(handleScroll);
+  win.scroll(handleScroll);
 
   loadMoreDiv = $('<div style="text-align: center; font-size: 150%;"></div>');
   loadMoreDiv.append(link);
