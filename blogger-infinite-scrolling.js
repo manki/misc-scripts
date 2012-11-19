@@ -1,18 +1,16 @@
-(function() {
+(function($) {
 var loadingGif = 'https://lh3.googleusercontent.com/-FiCzyOK4Mew/T4aAj2uVJKI/AAAAAAAAPaY/x23tjGIH7ls/s32/ajax-loader.gif';
 var olderPostsLink = '';
 var loadMoreDiv = null;
 var postContainerSelector = 'div.blog-posts';
 var loading = false;
 
+var $win = $(window);
+// Took from jQuery to avoid permission denied error in IE.
+var rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+
 function loadDisqusScript(domain) {
-  var bloggerjs = document.createElement('script');
-  bloggerjs.type = 'text/javascript';
-  bloggerjs.async = true;
-  bloggerjs.src = 'http://' + domain + '.disqus.com/blogger_index.js';
-  (document.getElementsByTagName('head')[0] ||
-   document.getElementsByTagName('body')[0]).
-      appendChild(bloggerjs);
+  $.getScript('http://' + domain + '.disqus.com/blogger_index.js');
 }
 
 function loadMore() {
@@ -28,14 +26,10 @@ function loadMore() {
 
   loadMoreDiv.find('a').hide();
   loadMoreDiv.find('img').show();
-  $.get(olderPostsLink, null, function(html) {
-    // Loaded more posts successfully.  Register this pageview with
-    // Google Analytics.
-    if (window._gaq) {
-      window._gaq.push(['_trackPageview', olderPostsLink]);
-    }
-
-    var newDom = $(html);
+  $.ajax(olderPostsLink, {
+    'dataType': 'html'
+  }).done(function(html) {
+    var newDom = $('<div></div>').append(html.replace(rscript, ''));
     var newLink = newDom.find('a.blog-pager-older-link');
     if (newLink) {
       olderPostsLink = newLink.attr('href');
@@ -44,9 +38,14 @@ function loadMore() {
       loadMoreDiv.hide();
     }
 
-    var newPosts = newDom.find(postContainerSelector + '>*');
+    var newPosts = newDom.find(postContainerSelector).children();
     $(postContainerSelector).append(newPosts);
 
+    // Loaded more posts successfully.  Register this pageview with
+    // Google Analytics.
+    if (window._gaq) {
+      window._gaq.push(['_trackPageview', olderPostsLink]);
+    }
     // Render +1 buttons.
     if (window.gapi && window.gapi.plusone && window.gapi.plusone.go) {
       window.gapi.plusone.go();
@@ -67,9 +66,16 @@ function loadMore() {
   });
 }
 
+function getDocumentHeight() {
+  return Math.max(
+      $win.height(),
+      $doc.height(),
+      document.documentElement.clientHeight);
+}
+
 function handleScroll() {
-  var height = document.body.scrollHeight;
-  var pos = $(window).scrollTop() + $(window).height();
+  var height = getDocumentHeight();
+  var pos = $win.scrollTop() + $win.height();
   if (height - pos < 150) {
     loadMore();
   }
@@ -89,7 +95,7 @@ function init() {
   link.click(loadMore);
   var img = $('<img src="' + loadingGif + '" style="display: none;">');
 
-  $(window).scroll(handleScroll);
+  $win.scroll(handleScroll);
 
   loadMoreDiv = $('<div style="text-align: center; font-size: 150%;"></div>');
   loadMoreDiv.append(link);
@@ -100,4 +106,4 @@ function init() {
 
 $(document).ready(init);
 
-})();
+})(jQuery);
