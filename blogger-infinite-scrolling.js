@@ -59,6 +59,10 @@ function loadMore() {
     if (window.FB && window.FB.XFBML && window.FB.XFBML.parse) {
       window.FB.XFBML.parse();
     }
+    // Render Twitter widgets.
+    if (window.twttr && window.twttr.widgets && window.twttr.widgets.load) {
+      window.twttr.widgets.load();
+    }
 
     loadMoreDiv.find('img').hide();
     loadMoreDiv.find('a').show();
