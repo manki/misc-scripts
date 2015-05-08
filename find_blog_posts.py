@@ -12,7 +12,7 @@ from xml.dom import minidom
 BLOGGER_HOST = 'draft.blogger.com'
 
 
-def _IsPost(entry):
+def IsPost(entry):
   for category in entry.getElementsByTagName('category'):
     scheme = category.getAttribute('scheme')
     term = category.getAttribute('term')
@@ -32,7 +32,7 @@ def FindPostsWithString(xml_doc, search_string):
     entry_id = all_ids[0].childNodes[0].data
     if not re.match('^tag:blogger.com,1999:blog-\\d+.post-\\d+$', entry_id):
       continue
-    if not _IsPost(entry):
+    if not IsPost(entry):
       continue
     all_contents = entry.getElementsByTagName('content')
     if len(all_contents) != 1:
