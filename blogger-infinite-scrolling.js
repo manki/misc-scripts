@@ -32,12 +32,6 @@ function loadMore() {
   }).done(function(html) {
     var newDom = $('<div></div>').append(html.replace(rscript, ''));
     var newLink = newDom.find('a.blog-pager-older-link');
-    if (newLink) {
-      olderPostsLink = newLink.attr('href');
-    } else {
-      olderPostsLink = '';
-      loadMoreDiv.hide();
-    }
 
     var newPosts = newDom.find(postContainerSelector).children();
     $(postContainerSelector).append(newPosts);
@@ -64,6 +58,12 @@ function loadMore() {
       window.twttr.widgets.load();
     }
 
+    if (newLink) {
+      olderPostsLink = newLink.attr('href');
+    } else {
+      olderPostsLink = '';
+      loadMoreDiv.hide();
+    }
     loadMoreDiv.find('img').hide();
     loadMoreDiv.find('a').show();
 
